@@ -28,8 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_05_144707) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "project_id"
-    t.index ["project_id"], name: "index_tickets_on_project_id"
+    t.bigint "projects_id"
+    t.index ["projects_id"], name: "index_tickets_on_projects_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,5 +45,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_05_144707) do
   end
 
   add_foreign_key "projects", "users", column: "users_id"
-  add_foreign_key "tickets", "projects"
+  add_foreign_key "tickets", "projects", column: "projects_id"
 end
