@@ -2,16 +2,24 @@
   <% if project.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
       <ul>
         <% project.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
+
+      
     </div>
   <% end %>
-
   <div>
+  <div class="field">
+        <%= form.label :title %><br />
+        <%= form.text_field :title ,{class:'form-control'} %>
+    </div>
+    <div class="field ">
+        <%= form.label :description %><br />
+        <%= form.text_area :description ,{class:'form-control'} %>
+    </div>
     <%= form.submit %>
   </div>
 <% end %>
