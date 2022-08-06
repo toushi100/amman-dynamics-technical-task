@@ -4,6 +4,8 @@ class TicketsController < ApplicationController
   # GET /tickets or /tickets.json
   def index
     @tickets = Ticket.all
+    @project =  Project.find(params[:project_id]).id
+
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -13,6 +15,7 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
+    @project =  Project.find(params[:project_id])
   end
 
   # GET /tickets/1/edit
@@ -21,11 +24,12 @@ class TicketsController < ApplicationController
 
   # POST /tickets or /tickets.json
   def create
-    @ticket = Ticket.new(ticket_params)
+    @project =  Project.find(params[:project_id])
+    @ticket = @project.tickets.new(ticket_params)
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully created." }
+        format.html { redirect_to project_ticket_url(@ticket), notice: "Ticket was successfully created." }
         format.json { render :show, status: :created, location: @ticket }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,9 +40,11 @@ class TicketsController < ApplicationController
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
+    @project =  Project.find(params[:project_id])
+    @ticket = @project.tickets.new(ticket_params)
     respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+        format.html { redirect_to project_ticket_url(@ticket), notice: "Ticket was successfully updated." }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,11 +66,12 @@ class TicketsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket
+      
       @ticket = Ticket.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.fetch(:ticket, {})
+      params.require(:ticket).permit(:title, :description, :status, :projects_id)
     end
 end
