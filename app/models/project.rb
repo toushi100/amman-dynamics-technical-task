@@ -1,3 +1,4 @@
 class Project < ApplicationRecord
-    has_many :users, class_name: "user", foreign_key: "user_id"
+    has_many :users
+    has_many :tickets
 end
