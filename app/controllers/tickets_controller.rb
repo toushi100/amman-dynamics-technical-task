@@ -44,7 +44,7 @@ class TicketsController < ApplicationController
     @ticket = @project.tickets.new(ticket_params)
     respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_to project_ticket_url(@ticket), notice: "Ticket was successfully updated." }
+        format.html { redirect_to project_ticket_url(@project,@ticket), notice: "Ticket was successfully updated." }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,6 +62,8 @@ class TicketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

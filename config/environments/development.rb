@@ -57,8 +57,15 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
 
   # Suppress logger output for asset requests.
-  config.assets.quiet = true
 
+
+   config.action_mailer.perform_deliveries = true
+   config.action_mailer.smtp_settings = {
+     address:              'localhost',
+     port:                 '1025',
+
+   }
+   Rails.application.routes.default_url_options[:host] = "localhost:3000"
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
