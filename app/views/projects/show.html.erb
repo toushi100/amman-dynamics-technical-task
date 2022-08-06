@@ -4,8 +4,15 @@
   <%= @project.title%>
   <%= @project.description%>
   <%= User.find(@project.users_id).email%>
-
+  <%= render @project.tickets %>
   <%= link_to "Edit this project", edit_project_path(@project) %> |
   <%= link_to "Back to projects", projects_path %>
   <%= button_to "Destroy this project", @project, method: :delete %>
+  <%= link_to "New ticket", new_project_ticket_path(@project) %>
+  <%= form_with url: add_user_path  do |form| %>
+    <%= form.label "Add User" , class:"text-left"%>
+    <%= form.select :user, User.all.collect { |p| [ p.email, p.id ] } ,{},{class:"form-control "}%>
+    <%= form.submit "Add User" %>
+  </div>
+<% end %>
 </div>

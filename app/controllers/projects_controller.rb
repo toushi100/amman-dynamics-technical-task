@@ -4,11 +4,14 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @projects = Project.where(users_id: current_user.id)
+    @shared_projects = current_user.projects
+    
   end
+
+  
 
   # GET /projects/1 or /projects/1.json
   def show
-
   end
 
   # GET /projects/new
@@ -24,7 +27,6 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.users_id = current_user.id
-    
 
     respond_to do |format|
       if @project.save
@@ -60,14 +62,30 @@ class ProjectsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
+  def project_invite
+    @user = current_user
+    @project = Project.find(params[:id])
 
-    # Only allow a list of trusted parameters through.
-    def project_params
-      params.require(:project).permit(:title, :description)
-    end
+    UserMailer.with(projec: @project).user_email(@user, @project).deliver_later
+  end
+
+  def add_user_to_project
+    @project = Project.find(params[:id])
+    @user = User.find(params[:user])
+
+    @user.projects << @project
+    UserMailer.with(projec: @project).user_email(@user, @project).deliver_later
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def project_params
+    params.require(:project).permit(:title, :description)
+  end
 end
