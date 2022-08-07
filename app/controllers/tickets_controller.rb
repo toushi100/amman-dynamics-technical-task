@@ -29,7 +29,7 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to project_ticket_url(@ticket), notice: "Ticket was successfully created." }
+        format.html { redirect_to project_ticket_url(@project,@ticket), notice: "Ticket was successfully created." }
         format.json { render :show, status: :created, location: @ticket }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,7 +58,7 @@ class TicketsController < ApplicationController
     @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
+      format.html { redirect_to project_tickets_url, notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -74,6 +74,6 @@ class TicketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.require(:ticket).permit(:title, :description, :status, :projects_id)
+      params.require(:ticket).permit(:title, :description, :status, :projects_id,:attachment)
     end
 end
