@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
-
+  before_action :set_project, only: %i[ show edit update destroy correct_user? ]
+  before_action :correct_user?, only: [:destroy]
   # GET /projects or /projects.json
   def index
     @projects = Project.where(users_id: current_user.id)
@@ -67,6 +67,10 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     UserMailer.with(projec: @project).user_email(@user, @project).deliver_later
+  end
+  
+  def correct_user?
+    redirect_to project_path(@project), notice: "Cannot delete others' project" unless @project.users_id == current_user.id
   end
 
   def add_user_to_project
