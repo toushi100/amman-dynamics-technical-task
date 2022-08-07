@@ -1,4 +1,15 @@
 <div id="<%= dom_id ticket %>">
 <%= ticket.title%>
 <%= ticket.description%>
+<%= ticket.status%>
+<% ticket.attachment.each_with_index do |attachment , index|%>
+<% if attachment.image?%>
+<%= image_tag(attachment,class:'w-50') %>
+<%else%>
+<%= attachment.filename%>
+<%= link_to "download attachment", rails_blob_path(attachment, disposition: 'attachment') ,{class:"btn btn-primary"} %>
+<%= link_to "preview attachment", rails_blob_path(attachment, disposition: 'preview') ,{class:"btn btn-primary"} %>
+<% end %>
+<% end %>
+
 </div>

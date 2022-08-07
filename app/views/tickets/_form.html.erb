@@ -2,7 +2,6 @@
   <% if ticket.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-
       <ul>
         <% ticket.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,20 +9,23 @@
       </ul>
     </div>
   <% end %>
-
   <div>
-  <div class="field">
-        <%= form.label :title %><br />
-        <%= form.text_field :title ,{class:'form-control'} %>
+    <div class="field">
+      <%= form.label :title %><br />
+      <%= form.text_field :title ,{class:'form-control'} %>
     </div>
     <div class="field ">
-        <%= form.label :description %><br />
-        <%= form.text_area :description ,{class:'form-control'} %>
+      <%= form.label :description %><br />
+      <%= form.text_area :description ,{class:'form-control'} %>
     </div>
     <div class="field ">
-        <%= form.label :status %><br />
-        <%= form.select :status, ["ToDo", "InProgress", "Done"] ,{class:'form-control'}%>
+      <%= form.label :status %><br />
+      <%= form.select :status, ["ToDo", "InProgress", "Done"] ,{class:'form-control'}%>
     </div>
+    <div class="field">
+      <%= form.label :attachment %>
+      <%= form.file_field :attachment , multiple: true%>
+      </div>
     <%= form.submit %>
   </div>
 <% end %>
