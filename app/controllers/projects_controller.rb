@@ -9,7 +9,9 @@ class ProjectsController < ApplicationController
   end
 
   
-
+ def all_projects
+  @projects = Project.all
+ end
   # GET /projects/1 or /projects/1.json
   def show
   end

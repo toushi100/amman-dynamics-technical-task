@@ -1,10 +1,11 @@
 class TicketsController < ApplicationController
-  before_action :set_ticket, only: %i[ show edit update destroy ]
+  before_action :set_ticket, only: %i[ show edit update destroy download]
 
   # GET /tickets or /tickets.json
   def index
     @tickets = Ticket.all
     @project =  Project.find(params[:project_id]).id
+    @filename = ''
 
   end
 
@@ -53,6 +54,10 @@ class TicketsController < ApplicationController
     end
   end
 
+  # def download
+  #   send_data @ticket.attachment.read,filename: @ticket.name
+  # end
+  #Ex:- :default =>''
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
     @ticket.destroy
@@ -74,6 +79,6 @@ class TicketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.require(:ticket).permit(:title, :description, :status, :projects_id,:attachment)
+      params.require(:ticket).permit(:title, :description, :status, :projects_id,:attachment=>[])
     end
 end
