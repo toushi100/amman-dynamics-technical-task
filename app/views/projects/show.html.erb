@@ -1,18 +1,64 @@
 <p style="color: green"><%= notice %></p>
-<%= render @project %>
-<div class="">
-  <%= @project.title%>
-  <%= @project.description%>
-  <%= User.find(@project.users_id).email%>
-  <%= render @project.tickets %>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
-  <%= button_to "Destroy this project", @project, method: :delete %>
-  <%= link_to "New ticket", new_project_ticket_path(@project) %>
-  <%= form_with url: add_user_path  do |form| %>
-    <%= form.label "Add User" , class:"text-left"%>
-    <%= form.select :user, User.all.collect { |p| [ p.email, p.id ] } ,{},{class:"form-control "}%>
-    <%= form.submit "Add User" %>
+<div class="container-fluid row m-0 p-0">
+  <h1 class = "col-md-7 d-flex">
+    <%= @project.title%>
+  </h1>
+  <small class = "col-md my-auto d-flex justify-content-end">
+    Created By: <%= User.find(@project.users_id).email%>
+  </small>
+</div>
+<div class="row card card-body bg-light">
+  <h4> Description: </h4>
+  <div class="border my-3 py-2">
+    <%= @project.description%>
   </div>
-<% end %>
+
+  <h4> Tickets: </h4>
+
+  <div class="border my-3 py-2">
+
+    <div class="row my-2">
+      <% if @project.tickets.count > 0%>
+        <% @project.tickets.each  do  |ticket| %>
+          <h5 class="fw-bold " >
+            -
+            <%= link_to ticket.title, project_ticket_path(@project,ticket), class:"text-dark"%>
+          </h5>
+        <% end %>
+      <% else %>
+        <p> No tickets yet </p>
+      <%end%>
+    </div>
+  </div>
+
+
+
+
+  <div class="d-flex justify-content-end">
+    <%= link_to "New ticket", new_project_ticket_path(@project) ,class:"btn btn-primary "%>
+  </div>
+  <div class="row my-3 py-3 mx-0 px-0">
+    <div class="col-sm w-100">
+      <div class="row d-flex justify-content-center">
+        <div class="col ">
+          <%= link_to "Edit", edit_project_path(@project),class:"btn btn-warning my-1" %>
+        </div>
+        <div class="col">
+          <%= link_to "Back", projects_path,class:"btn btn-info my-1" %>
+        </div>
+        <div class="col">
+          <%= button_to "Delete ", @project, method: :delete,class:"btn btn-danger my-1" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm my-3">
+      <%= form_with url: add_user_path  do |form| %>
+        <%= form.label "Add User" , class:"text-left"%>
+        <%= form.select :user, User.all.collect { |p| [ p.email, p.id ] } ,{},{class:"form-control "}%>
+        <div class=" d-flex justify-content-end my-2">
+          <%= form.submit "Add User",class:"btn btn-primary my-auto p-2" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
