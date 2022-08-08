@@ -32,6 +32,8 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
+        DueDateJob.set(wait_until: 1.second.since(@ticket.due_date)).perform_later(@ticket)
+        DueDateJob.set(wait: 1.second).perform_later(@ticket)
         format.html { redirect_to project_url(@project), notice: "Ticket was successfully created." }
         format.json { render :show, status: :created, location: @ticket }
       else
