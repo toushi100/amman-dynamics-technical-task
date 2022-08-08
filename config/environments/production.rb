@@ -50,7 +50,7 @@ Rails.application.configure do
     tls: true,
 
   }
-  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+  Rails.application.routes.default_url_options[:host] = "https://serene-shore-69287.herokuapp.com"
   config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain.
