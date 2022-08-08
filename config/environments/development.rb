@@ -25,7 +25,7 @@ Rails.application.configure do
 
     config.cache_store = :memory_store
     config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
+      "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
@@ -58,15 +58,20 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: "stmp.hostgator.com",
+    port: "465",
+    domain: "hellojobz.com",
+    user_name: "ahmed.salah@hellojobz.com",
+    password: "Test@4321@0",
+    authentication: "plain",
+    enable_starttls_auto: true,
+    tls: true,
 
-   config.action_mailer.perform_deliveries = true
-   config.action_mailer.smtp_settings = {
-     address:              'localhost',
-     port:                 '1025',
-
-   }
-   Rails.application.routes.default_url_options[:host] = "localhost:3000"
-   config.active_storage.service = :amazon
+  }
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+  config.active_storage.service = :amazon
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

@@ -1,15 +1,41 @@
-<div id="<%= dom_id ticket %>">
-<%= ticket.title%>
-<%= ticket.description%>
-<%= ticket.status%>
-<% ticket.attachment.each_with_index do |attachment , index|%>
-<% if attachment.image?%>
-<%= image_tag(attachment,class:'w-50') %>
-<%else%>
-<%= attachment.filename%>
-<%= link_to "download attachment", rails_blob_path(attachment, disposition: 'attachment') ,{class:"btn btn-primary"} %>
-<%= link_to "preview attachment", rails_blob_path(attachment, disposition: 'preview') ,{class:"btn btn-primary"} %>
-<% end %>
-<% end %>
-
+<div id="<%= dom_id ticket %>" class = "card card-body bg-light container">
+  <div class="row mx-0 my-2">
+    <h3 class="fw-bold px-0 "><%= ticket.title%></h3>
+    <div class="row border rounded-3 bg-warning mx-0 my-3 py-3 ">
+      <div class="col d-flex justify-content-start">
+        <h4 class=" fw-bold  rounded-3">
+          Due:  <%= ticket.due_date%>
+        </h4>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <h4 class="fw-bold rounded-3">
+          Status: <%= ticket.status%>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <h4> Description: </h4>
+  <div class="border rounded-3 my-3 py-3 px-2">
+    <%= ticket.description%>
+  </div>
+  <h4> Attachments</h4>
+  <div class="border my-3 py-3 px-2" >
+    <% ticket.attachment.each_with_index do |attachment , index|%>
+      <% if attachment.image?%>
+      <div class="row ">
+         <%= image_tag(attachment,style:'max-width:300px;') %>
+        </div>
+      <%else%>
+        <div class="row ">
+          <div class="col d-flex justify-content-start">
+            <h5 class="fw-bold"> - <%= attachment.filename%></h5>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <%= link_to "Download", rails_blob_path(attachment, disposition: 'attachment') ,{class:"btn btn-primary mx-1"} %>
+            <%= link_to "Preview ", rails_blob_path(attachment, disposition: 'preview') ,{class:"btn btn-primary mx-1"} %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>

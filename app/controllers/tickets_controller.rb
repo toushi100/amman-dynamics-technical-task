@@ -21,6 +21,8 @@ class TicketsController < ApplicationController
 
   # GET /tickets/1/edit
   def edit
+    @project =  Project.find(params[:project_id])
+
   end
 
   # POST /tickets or /tickets.json
@@ -30,7 +32,9 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to project_ticket_url(@project,@ticket), notice: "Ticket was successfully created." }
+        DueDateJob.set(wait_until: 1.second.since(@ticket.due_date)).perform_later(@ticket)
+        DueDateJob.set(wait: 1.second).perform_later(@ticket)
+        format.html { redirect_to project_url(@project), notice: "Ticket was successfully created." }
         format.json { render :show, status: :created, location: @ticket }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +46,9 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
     @project =  Project.find(params[:project_id])
-    @ticket = @project.tickets.new(ticket_params)
+    @ticket.update(ticket_params)
+    puts "================================================="
+    puts params
     respond_to do |format|
       if @ticket.update(ticket_params)
         format.html { redirect_to project_ticket_url(@project,@ticket), notice: "Ticket was successfully updated." }
@@ -61,9 +67,10 @@ class TicketsController < ApplicationController
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
     @ticket.destroy
+    @project =  Project.find(params[:project_id])
 
     respond_to do |format|
-      format.html { redirect_to project_tickets_url, notice: "Ticket was successfully destroyed." }
+      format.html { redirect_to project_url(@project), notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -79,6 +86,6 @@ class TicketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.require(:ticket).permit(:title, :description, :status, :projects_id,:attachment=>[])
+      params.require(:ticket).permit(:title, :description, :status, :projects_id,:due_date,:attachment=>[])
     end
 end
