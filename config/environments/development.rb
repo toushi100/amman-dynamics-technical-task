@@ -58,7 +58,10 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
   #   address: "stmp.gator4246.hostgator.com",
   #   port: "465",
@@ -70,17 +73,16 @@ Rails.application.configure do
   #   tls: true,
 
   # }
-  config.action_mailer.smtp_settings = {
-    user_name: "apikey", # This is the string literal 'apikey', NOT the ID of your API key
-    password: "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", # This is the secret sendgrid API key which was issued during API key creation
-    domain: "serene-shore-69287.herokuapp.com",
-    address:"smtp.sendgrid.net",
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true,
+  # config.action_mailer.smtp_settings = {
+  #   user_name: "apikey", # This is the string literal 'apikey', NOT the ID of your API key
+  #   password: "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", # This is the secret sendgrid API key which was issued during API key creation
+  #   domain: "localhost:3000",
+  #   address:"smtp.sendgrid.net",
+  #   port: 587,
+  #   authentication: :plain,
+  #   enable_starttls_auto: true,
 
-  }
-  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+  # }
   config.active_storage.service = :amazon
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
