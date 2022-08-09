@@ -73,16 +73,15 @@ Rails.application.configure do
   #   tls: true,
 
   # }
-  # config.action_mailer.smtp_settings = {
-  #   user_name: "apikey", # This is the string literal 'apikey', NOT the ID of your API key
-  #   password: "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", # This is the secret sendgrid API key which was issued during API key creation
-  #   domain: "localhost:3000",
-  #   address:"smtp.sendgrid.net",
-  #   port: 587,
-  #   authentication: :plain,
-  #   enable_starttls_auto: true,
-
-  # }
+  config.action_mailer.smtp_settings = {
+    address: "smtp.mailgun.org",
+    port: 587,
+    authentication: "login",
+    domain: "your-domain.com",
+    user_name: "postmaster@sandbox3f9909e78e61462b9d397d6b7d347fa2.mailgun.org",
+    password: "60f97791815db94f2d6d83213f4b715f-2bab6b06-156c7076",
+    enable_starttls_auto: true,
+  }
   config.active_storage.service = :amazon
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

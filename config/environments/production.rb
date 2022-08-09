@@ -39,7 +39,15 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.action_mailer.perform_deliveries = true
-
+  config.action_mailer.smtp_settings = {
+    address: "smtp.mailgun.org",
+    port: 587,
+    authentication: "login",
+    domain: "your-domain.com",
+    user_name: "postmaster@sandbox3f9909e78e61462b9d397d6b7d347fa2.mailgun.org",
+    password: "60f97791815db94f2d6d83213f4b715f-2bab6b06-156c7076",
+    enable_starttls_auto: true,
+  }
   Rails.application.routes.default_url_options[:host] = "https://serene-shore-69287.herokuapp.com"
   config.active_storage.service = :amazon
 
