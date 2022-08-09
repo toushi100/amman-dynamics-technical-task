@@ -59,15 +59,25 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
 
   config.action_mailer.perform_deliveries = true
+  # config.action_mailer.smtp_settings = {
+  #   address: "stmp.gator4246.hostgator.com",
+  #   port: "465",
+  #   domain: "hellojobz.com",
+  #   user_name: "ahmed.salah@hellojobz.com",
+  #   password: "Test@4321@0",
+  #   authentication: "plain",
+  #   enable_starttls_auto: true,
+  #   tls: true,
+
+  # }
   config.action_mailer.smtp_settings = {
-    address: "stmp.hostgator.com",
-    port: "465",
-    domain: "hellojobz.com",
-    user_name: "ahmed.salah@hellojobz.com",
-    password: "Test@4321@0",
-    authentication: "plain",
-    enable_starttls_auto: true,
-    tls: true,
+    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
+  :password => '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', # This is the secret sendgrid API key which was issued during API key creation
+  :domain => 'serene-shore-69287.herokuapp.com',
+  :address => 'smtp.sendgrid.net',
+  :port => 587,
+  :authentication => :plain,
+  :enable_starttls_auto => true
 
   }
   Rails.application.routes.default_url_options[:host] = "localhost:3000"
