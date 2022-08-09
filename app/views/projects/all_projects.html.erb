@@ -1,8 +1,23 @@
+<div class="row my-3 d-flex ">
+  <h1 class="col ">All Projects</h1>
+  <div class="col d-flex justify-content-end">
+    <%= link_to "New project", new_project_path ,{class:" btn btn-primary my-auto p-auto"}%>
+  </div>
+</div>
+<% if @projects%>
 <% @projects.each do |project|%>
   <div class="row card card-body bg-light ">
     <h4 class="" >
       <%=link_to project.title , project_path(project),{class:"col text-dark"}%>
       <h6 class="col text-muted "><%= project.created_at%></h6>  
+    </h4>
+  </div>
+<%end%>
+<%else%>
+
+  <div class="row card card-body bg-light ">
+    <h4 class="" >
+      <h6 class="col">No projects yet :(</h6>  
     </h4>
   </div>
 <%end%>
