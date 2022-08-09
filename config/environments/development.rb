@@ -71,13 +71,13 @@ Rails.application.configure do
 
   # }
   config.action_mailer.smtp_settings = {
-    :user_name => 'apikey', # This is the string literal 'apikey', NOT the ID of your API key
-  :password => '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', # This is the secret sendgrid API key which was issued during API key creation
-  :domain => 'serene-shore-69287.herokuapp.com',
-  :address => 'smtp.sendgrid.net',
-  :port => 587,
-  :authentication => :plain,
-  :enable_starttls_auto => true
+    user_name: "apikey", # This is the string literal 'apikey', NOT the ID of your API key
+    password: "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", # This is the secret sendgrid API key which was issued during API key creation
+    domain: "serene-shore-69287.herokuapp.com",
+    address:"smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
+    enable_starttls_auto: true,
 
   }
   Rails.application.routes.default_url_options[:host] = "localhost:3000"
